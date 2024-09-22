@@ -1,0 +1,40 @@
+env:
+  port: 8000
+  syncTaskTime: "0 3 * * *"
+wps:
+  addr: http://encs-pri-cams-engine/i/docmini
+  companyId: 1
+  platformId: 1
+log:
+  storageLocation: ./logs/
+  rotationTime: 24
+  remainRotationCount: 2 #日志数量
+  #日志级别 6表示全都打印，测试阶段建议设置为6
+  remainLogLevel: 6
+  elasticSearchSwitch: false
+  elasticSearchAddr: [ 127.0.0.1:9201 ]
+  elasticSearchUser: ""
+  elasticSearchPassword: ""
+decSalt: 2308101809479719
+decCsvFilePath: ./dept.csv
+mysql:
+  dbMysqlAddress: [ localhost:49153 ]
+  dbMysqlUserName: root
+  dbMysqlPassword: mysqlpw
+  dbMysqlDatabaseName: temp_sync_data #ecis_plugins_ak20230530hncxjk depts
+  dbMsgTableNum: 1
+  dbMaxOpenConns: 100
+  dbMaxIdleConns: 10
+  dbMaxLifeTime: 5
+  logLevel: 1 #1=slient 2=error 3=warn 4=info
+#  slowThreshold: 500
+#  dbMysqlAddress: [ localhost:49153 ]
+#  dbMysqlUserName: root
+#  dbMysqlPassword: mysqlpw
+#  dbMysqlDatabaseName: depts
+#  dbMsgTableNum: 1
+#  dbMaxOpenConns: 100
+#  dbMaxIdleConns: 10
+#  dbMaxLifeTime: 5
+#  logLevel: 1 #1=slient 2=error 3=warn 4=info
+#  slowThreshold: 500
