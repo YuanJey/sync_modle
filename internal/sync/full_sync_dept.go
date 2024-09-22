@@ -12,8 +12,16 @@ import (
 
 type DeptSyncHandler struct {
 	logic  check.DeptLogic
-	SyncCh chan ChDeptData
+	SyncCh chan *ChDeptData
 }
+
+func (d *DeptSyncHandler) SetLogic(logic check.DeptLogic) {
+	d.logic = logic
+}
+func NewDeptSyncHandler() *DeptSyncHandler {
+	return &DeptSyncHandler{SyncCh: make(chan *ChDeptData)}
+}
+
 type ChDeptData struct {
 	operationID string
 	org         *structs.Organization
@@ -43,7 +51,7 @@ func (d *DeptSyncHandler) SyncSubTempDept(operationID string, parentId string, w
 	if len(list) > 0 {
 		for i := range list {
 			//d.process(operationID, &list[i], wpsAllDept)
-			d.SyncCh <- ChDeptData{
+			d.SyncCh <- &ChDeptData{
 				operationID: operationID,
 				org:         &list[i],
 				wpsAllDept:  wpsAllDept,

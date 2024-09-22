@@ -14,6 +14,31 @@ type DefaultUserCheck struct {
 	wpsDeptMap *dept.AllWpsDept
 }
 
+func NewDefaultUserCheck() *DefaultUserCheck {
+	check := DefaultUserCheck{}
+	check.SetWpsData("init WpsData")
+	return &check
+}
+func (d *DefaultUserCheck) SetWpsData(operationID string) {
+	wpsDept, err := wpsApi.Sdk.Dept.GetAllWpsDept(operationID)
+	if err != nil {
+		log.Error(operationID, "get wps dept list failed", err.Error())
+		return
+	}
+	d.wpsDeptMap = wpsDept
+	log.Info(operationID, "set wps data success")
+	log.Info(operationID, "root dept info :", wpsDept.RootDept)
+	log.Info(operationID, "wps dept len :", len(wpsDept.WidDeptList))
+	log.Info(operationID, "third dept len :", len(wpsDept.TidDeptList))
+	allUser, err := wpsApi.Sdk.User.GetAllUser(operationID, wpsDept)
+	if err != nil {
+		log.Error(operationID, "get wps user list failed", err.Error())
+		return
+	}
+	d.wpsUserMap = allUser
+	log.Info(operationID, "wps user len :", len(d.wpsUserMap.WidUserList))
+	log.Info(operationID, "third user len :", len(d.wpsUserMap.TidUserList))
+}
 func (d *DefaultUserCheck) IsCreate(operationID string, thirdUser *base_info.ThirdMember) bool {
 	if _, ok := d.wpsUserMap.TidUserList[thirdUser.ThirdUnionId]; ok {
 		log.Info(operationID, " user create ", *thirdUser)

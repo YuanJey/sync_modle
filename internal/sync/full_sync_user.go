@@ -8,8 +8,16 @@ import (
 
 type UserSyncHandler struct {
 	logic  check.UserLogic
-	SyncCh chan ChUserData
+	SyncCh chan *ChUserData
 }
+
+func (u *UserSyncHandler) SetLogic(logic check.UserLogic) {
+	u.logic = logic
+}
+func NewUserSyncHandler() *UserSyncHandler {
+	return &UserSyncHandler{SyncCh: make(chan *ChUserData)}
+}
+
 type ChUserData struct {
 	operationID string
 	user        *base_info.ThirdMember
@@ -18,7 +26,7 @@ type ChUserData struct {
 func (u *UserSyncHandler) FullSyncUser(operationID string, users []*base_info.ThirdMember) {
 	for i := range users {
 		//u.process(operationID, users[i])
-		u.SyncCh <- ChUserData{operationID: operationID, user: users[i]}
+		u.SyncCh <- &ChUserData{operationID: operationID, user: users[i]}
 	}
 }
 func (u *UserSyncHandler) process(operationID string, user *base_info.ThirdMember) {

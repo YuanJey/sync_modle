@@ -12,6 +12,12 @@ type DefaultDeptCheck struct {
 	WpsData *dept.AllWpsDept
 }
 
+func NewDefaultDeptCheck() *DefaultDeptCheck {
+	check := DefaultDeptCheck{}
+	check.SetWpsData("init WpsData")
+	return &check
+}
+
 func (d *DefaultDeptCheck) SetWpsData(operationID string) {
 	wpsDept, err := wpsApi.Sdk.Dept.GetAllWpsDept(operationID)
 	if err != nil {
