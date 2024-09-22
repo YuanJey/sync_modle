@@ -1,16 +1,17 @@
 package structs
 
+// uniqueIndex:gid_uid;
 type Organization struct {
 	ID       string `json:"id" gorm:"column:id;primary_key"`
 	Name     string `json:"name" gorm:"column:name"`
-	ParentId string `json:"parent_id" gorm:"column:parent_id"`
+	ParentId string `json:"parent_id" gorm:"column:parent_id;index:parentId"`
 	Weight   int    `json:"weight" gorm:"column:weight"`
 	IsRoot   int    `json:"isRoot" gorm:"column:is_root"`
 }
 type User struct {
 	ID    string `json:"id" gorm:"column:id;primary_key"`
 	Name  string `json:"name" gorm:"column:name"`
-	OrgID string `json:"orgId" gorm:"column:org_id"`
+	OrgID string `json:"orgId" gorm:"column:org_id;index:org_Id"`
 }
 type Dept struct {
 	Id              string `json:"id" gorm:"id"`
